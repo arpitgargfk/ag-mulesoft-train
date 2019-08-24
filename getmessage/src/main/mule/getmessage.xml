@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="74e9b138-a300-47c7-b340-22a9aff11acc" >
+		<http:listener-connection host="0.0.0.0" port="8085" />
+	</http:listener-config>
+	<flow name="getmessageFlow" doc:id="ec9b2049-4e72-4d8a-b7de-a3c2ccdf9261" >
+		<http:listener doc:name="Listener" doc:id="bcaa0462-0b2f-47be-adad-f580459418c1" config-ref="HTTP_Listener_config" path="/getMessage" allowedMethods="get"/>
+		<ee:transform doc:name="Transform Message" doc:id="2379c2b9-04a1-4828-b5f2-21bc141b6e2a" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"output":"hello here12"
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="57e89842-e84d-422b-a5ec-f30986b29765" message='"hello here"'/>
+	</flow>
+</mule>
